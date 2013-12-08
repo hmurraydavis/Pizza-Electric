@@ -1,0 +1,49 @@
+%% Initial setup
+clear all;
+close all;
+
+%% 
+%Plot the crystal length as we reseed it
+X=[1,2,3]; %number of reseedings
+Y=[5.64,8,20.42]; %length, mm
+hold on;
+plot(X,Y,'c*', 'MarkerSize', 20); %raw data
+%h=lsline   %if wanted a straight line best fit
+%% best fit curve:
+xi=-.1:0.1:X(length(X));
+yi=interp1(X,Y,xi,'v5cubic');
+plot(xi,yi,'LineWidth',3);
+title('Crystal Length Over Time','FontSize', 20);
+xlabel('Number of Re-seedings','FontSize', 16);
+ylabel('Longest Length of Crystal (mm)', 'FontSize', 16);
+%scatter(X,Y,'or')
+
+%% Plot the crystal mass as we reseed it
+figure;
+hold on;
+M=[0.0777,0.159,7.0987]; %origional data
+plot(X,M,'c*', 'MarkerSize', 20); %raw data, points
+%% :best fit curve:
+xi=-.1:0.1:X(length(X));
+mi=interp1(X,M,xi,'v5cubic');
+plot(xi,mi,'LineWidth',3);
+title('Crystal Mass Over Time','FontSize', 20);
+xlabel('Number of Re-seedings','FontSize', 16);
+ylabel('Mass of Crystal (g)', 'FontSize', 16);
+
+%% Plot both on a graph with 2 y axies
+figure;
+[haxes,hline1,hline2]=plotyy(xi,yi,xi,mi)
+%make the weight of lines heavier
+set(hline2,'LineWidth',3) %crystal length curve
+set(hline1,'LineWidth',3) %crystal mass curve
+xlabel('Number of re-seedings','FontSize', 16)
+title('Mass and Length of Crystals while Undergoing Re-Seeding','FontSize', 20)
+%left y-axis label:
+axes(haxes(1))
+ylabel('Longest Length of Crystal (mm)','FontSize', 16)
+%right y-axis label
+axes(haxes(2))
+ylabel('Mass of Crystal (g)','FontSize', 16)
+
+
